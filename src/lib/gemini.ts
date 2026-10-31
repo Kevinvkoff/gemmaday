@@ -1,7 +1,8 @@
 import "server-only";
 
 import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
-import { findTaxiStop, taxiStopCatalog, type TaxiStop } from "@/data/taxi-stops";
+import type { TaxiStop } from "@/data/taxi-stops";
+import { findTaxiStop, taxiStopCatalog } from "@/lib/stops";
 
 export type ChatTurn = {
   role: "user" | "model";
@@ -50,8 +51,8 @@ function systemInstruction() {
 Elle cherche l'arrêt de taxi où monter pour aller quelque part.
 
 Règle de choix :
-- Si elle ne dit pas être déjà dans une commune, propose la Poste (id poste). C'est de là que partent les taxis du centre vers les quartiers, l'université, l'aéroport et l'hôpital.
-- Propose l'arrêt du quartier seulement si elle dit s'y trouver déjà, ou si elle demande explicitement l'arrêt de ce quartier.
+- Choisis l'arrêt de la liste dont le nom ou la desserte correspond le mieux à la destination.
+- Si aucun arrêt ne correspond mieux et qu'elle ne dit pas être déjà dans un quartier, propose la Poste (id poste).
 - Si la destination n'est pas claire, pose une question et mets stopId à null.
 - N'invente aucun arrêt en dehors de la liste.
 

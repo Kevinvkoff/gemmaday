@@ -24,14 +24,62 @@ const suggestions = [
   "Où prendre un taxi pour l’hôpital Sendwe ?",
 ];
 
-export function Chat({ model }: { model: string }) {
+const STORAGE_KEY = "gemmaday-chat";
+
+function isStop(value: unknown): value is TaxiStop {
+  if (!value || typeof value !== "object") return false;
+  const stop = value as TaxiStop;
+  return (
+    typeof stop.id === "string" &&
+    typeof stop.name === "string" &&
+    typeof stop.address === "string" &&
+    typeof stop.lat === "number" &&
+    typeof stop.lng === "number" &&
+    typeof stop.serves === "string"
+  );
+}
+
+function isMessage(value: unknown): value is Message {
+  if (!value || typeof value !== "object") return false;
+  const message = value as Message;
+  return (
+    (message.role === "user" || message.role === "model") &&
+    typeof message.text === "string" &&
+    (message.stop == null || isStop(message.stop))
+  );
+}
+
+function readStoredMessages() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed) || !parsed.every(isMessage)) return [];
+    return parsed;
+  } catch {
+    return [];
+  }
+}
+
+export function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [stored, setStored] = useState(false);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [origin, setOrigin] = useState<MapPoint | null>(null);
   const [locationState, setLocationState] = useState<LocationState>("idle");
   const threadRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMessages(readStoredMessages());
+    setStored(true);
+  }, []);
+
+  useEffect(() => {
+    if (!stored) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }, [messages, stored]);
 
   useEffect(() => {
     threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight, behavior: "smooth" });
@@ -99,14 +147,8 @@ export function Chat({ model }: { model: string }) {
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-3xl flex-1 flex-col px-4 pt-6 sm:px-6">
-      <header className="flex items-end justify-between gap-4 border-b border-zinc-200 pb-4 dark:border-zinc-800">
-        <div>
-          <p className="text-sm tracking-wide text-zinc-500 uppercase">gemmaday · Lubumbashi</p>
-          <h1 className="text-2xl font-semibold tracking-tight">Où veux-tu aller ?</h1>
-        </div>
-        <p className="shrink-0 rounded-full bg-zinc-100 px-3 py-1 font-mono text-xs whitespace-nowrap text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-          {model}
-        </p>
+      <header className="border-b border-zinc-200 pb-4 dark:border-zinc-800">
+        <h1 className="text-2xl font-semibold tracking-tight">Où veux-tu aller ?</h1>
       </header>
 
       <div ref={threadRef} className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto py-6">

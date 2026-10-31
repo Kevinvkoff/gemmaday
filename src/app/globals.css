@@ -32,3 +32,12 @@ body {
   background: #e7e5e4;
   z-index: 0;
 }
+
+.leaflet-div-icon.gemma-taxi {
+  background: transparent;
+  border: 0;
+}
+
+.is-placing .leaflet-container {
+  cursor: crosshair;
+}

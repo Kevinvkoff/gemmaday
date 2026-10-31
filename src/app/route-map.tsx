@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CircleMarker, MapContainer, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
+import { CircleMarker, MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
 import type { TaxiStop } from "@/data/taxi-stops";
+import { taxiMarkerIcon } from "./taxi-marker";
 import "leaflet/dist/leaflet.css";
 
 export type MapPoint = { lat: number; lng: number };
@@ -89,17 +90,13 @@ function RouteCanvas({
           <Popup>Ta position</Popup>
         </CircleMarker>
       ) : null}
-      <CircleMarker
-        center={[stop.lat, stop.lng]}
-        radius={9}
-        pathOptions={{ color: "#9a3412", fillColor: "#ea580c", fillOpacity: 1 }}
-      >
+      <Marker position={[stop.lat, stop.lng]} icon={taxiMarkerIcon(false)}>
         <Popup>
           {stop.name}
           <br />
           {stop.address}
         </Popup>
-      </CircleMarker>
+      </Marker>
     </MapContainer>
   );
 }
