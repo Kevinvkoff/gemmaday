@@ -1,4 +1,4 @@
-import { generateChatReply, type ChatTurn } from "@/lib/gemini";
+import { generateGuidance, type ChatTurn } from "@/lib/gemini";
 
 const MAX_TURNS = 40;
 const MAX_CHARS = 8000;
@@ -73,8 +73,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const text = await generateChatReply(turns);
-    return Response.json({ text });
+    const guidance = await generateGuidance(turns);
+    return Response.json({
+      text: guidance.reply,
+      stop: guidance.stop,
+    });
   } catch (error) {
     return Response.json({ error: errorMessage(error) }, { status: 502 });
   }

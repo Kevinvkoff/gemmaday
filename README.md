@@ -14,15 +14,15 @@ Demander au hasard dans la rue prend du temps, et les noms de lieux ne suffisent
 
 ## Ce que le projet fait
 
-gemmaday est une application web. La personne écrit où elle se trouve et où elle veut aller, avec ses mots. Gemma lui indique l’arrêt de taxi à rejoindre.
+gemmaday est une application web. La personne arrive sur le chat et dit où elle veut aller. Gemma choisit un arrêt de taxi parmi des repères de Lubumbashi, donne son adresse, puis la carte trace l’itinéraire depuis la position actuelle.
 
-Parcours visé :
+Parcours :
 
-1. Elle décrit son point de départ et sa destination.
-2. Gemma identifie l’arrêt de taxi adapté.
-3. Elle reçoit une indication claire : quel arrêt, et comment s’y rendre.
+1. Elle écrit sa destination dans le chat.
+2. Gemma indique l’arrêt où monter, avec son adresse.
+3. La carte place sa position et l’arrêt, puis propose l’itinéraire routier (durée et distance).
 
-Cette première version pose la base technique. La connaissance des arrêts de Lubumbashi et le dialogue guidé autour de ces arrêts restent à construire. Aujourd’hui, l’application permet déjà de discuter avec Gemma. Elle ne connaît pas encore les arrêts de la ville.
+Les arrêts sont des repères OpenStreetMap (la Poste, le marché Kenya, l’université, l’aéroport, l’hôpital Sendwe, et d’autres communes). Ce n’est pas encore un registre officiel de la ville. Si la personne ne dit pas être déjà dans un quartier, Gemma propose la Poste, d’où partent les taxis du centre.
 
 ## Stack
 
@@ -31,6 +31,8 @@ Cette première version pose la base technique. La connaissance des arrêts de L
 - Tailwind CSS 4
 - [`@google/genai`](https://googleapis.github.io/js-genai/) pour appeler Gemma
 - Modèle configuré : `gemma-4-31b-it`
+- Leaflet et OpenStreetMap pour la carte
+- OSRM pour l’itinéraire entre la position actuelle et l’arrêt
 
 La clé API reste sur le serveur. Le navigateur parle à `POST /api/chat`, qui appelle Gemma.
 
@@ -69,23 +71,14 @@ npm run start
 ## Structure
 
 ```text
-src/app/page.tsx            Page de discussion
-src/app/chat.tsx            Interface du chat
-src/app/message-content.tsx Affichage des réponses (titres, listes, gras)
-src/app/api/chat/route.ts   Route serveur qui reçoit la conversation
-src/lib/gemini.ts           Client Gemma et lecture des variables d’environnement
-```
-
-Pour appeler Gemma depuis du code serveur :
-
-```ts
-import { generateChatReply } from "@/lib/gemini";
-
-const text = await generateChatReply([
-  { role: "user", text: "Je viens d’arriver à Lubumbashi. Où est l’arrêt de taxi pour aller au marché ?" },
-]);
+src/app/chat.tsx               Chat, point d’entrée
+src/app/route-map.tsx          Carte, position et itinéraire
+src/app/api/chat/route.ts      Conversation avec Gemma
+src/app/api/itinerary/route.ts Itinéraire routier
+src/data/taxi-stops.ts         Arrêts repères de Lubumbashi
+src/lib/gemini.ts              Consigne et appel du modèle
 ```
 
 ## Suite
 
-La prochaine étape est le métier du projet : apprendre à Gemma les arrêts de taxi de Lubumbashi, puis répondre à une personne qui vient d’arriver et qui doit se rendre quelque part.
+Enrichir les arrêts avec des points confirmés sur place, et couvrir les départs quand la personne est déjà dans une commune plutôt qu’au centre.
