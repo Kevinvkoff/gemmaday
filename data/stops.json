@@ -102,5 +102,13 @@
     "lat": -11.64084,
     "lng": 27.49025,
     "serves": "quartier Industriel, étape vers Annexe"
+  },
+  {
+    "id": "arret-bel-air-hewabora",
+    "name": "Arrêt Bel-air, hewabora",
+    "address": "Avenue des Ecoles, Kiwele, Lubumbashi",
+    "serves": "cette arret avec les moto taxi trycicle qui permettent de se rendre au Bel-Air et du côté hewabora directement",
+    "lat": -11.652593666741724,
+    "lng": 27.484713792800907
   }
 ]
