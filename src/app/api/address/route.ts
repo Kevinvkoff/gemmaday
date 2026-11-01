@@ -51,7 +51,7 @@ export async function GET(request: Request) {
   try {
     const response = await fetch(endpoint, {
       headers: {
-        "User-Agent": "gemmaday/0.1 (https://github.com/Likeur/gemmaday)",
+        "User-Agent": "intercom/0.1 (https://github.com/Likeur/intercom)",
         "Accept-Language": "fr",
       },
       signal: AbortSignal.timeout(12000),

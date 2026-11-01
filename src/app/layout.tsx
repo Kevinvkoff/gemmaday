@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "gemmaday",
+  title: "intercom",
   description: "Trouve l’arrêt de taxi à Lubumbashi avec Gemma, puis suis l’itinéraire depuis ta position.",
 };
 

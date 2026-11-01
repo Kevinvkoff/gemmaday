@@ -24,7 +24,7 @@ const suggestions = [
   "Où prendre un taxi pour l’hôpital Sendwe ?",
 ];
 
-const STORAGE_KEY = "gemmaday-chat";
+const STORAGE_KEY = "intercom-chat";
 
 type DictationResult = {
   isFinal: boolean;

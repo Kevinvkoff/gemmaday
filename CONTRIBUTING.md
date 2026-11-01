@@ -1,6 +1,6 @@
-# Contribuer à gemmaday
+# Contribuer à intercom
 
-gemmaday aide une personne qui arrive à Lubumbashi à trouver l’arrêt de taxi pour aller où elle doit se rendre. Les contributions sont les bienvenues : un arrêt mieux placé, une phrase plus claire, ou un correctif.
+intercom aide une personne qui arrive à Lubumbashi à trouver l’arrêt de taxi pour aller où elle doit se rendre. Les contributions sont les bienvenues : un arrêt mieux placé, une phrase plus claire, ou un correctif.
 
 En participant, vous acceptez le [code de conduite](CODE_OF_CONDUCT.md). Le projet est sous [licence MIT](LICENSE).
 
@@ -9,8 +9,8 @@ En participant, vous acceptez le [code de conduite](CODE_OF_CONDUCT.md). Le proj
 Prérequis : Node.js 20 ou plus récent, et une clé API Gemini avec accès à Gemma.
 
 ```bash
-git clone https://github.com/Likeur/gemmaday.git
-cd gemmaday
+git clone https://github.com/Likeur/intercom.git
+cd intercom
 npm install
 cp .env.example .env
 ```
