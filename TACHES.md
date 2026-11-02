@@ -1,8 +1,8 @@
-# Tâches — gemmaday
+# Tâches — intercom
 
 Quatre personnes. Le chat avec Gemma existe déjà. Le travail restant : une personne qui arrive à Lubumbashi écrit où elle veut aller. Gemma reçoit sa position actuelle et lui propose l’arrêt de taxi le plus proche (nom et adresse). La carte trace ensuite l’itinéraire depuis cette position jusqu’à l’arrêt.
 
-Dépôt : [github.com/Likeur/gemmaday](https://github.com/Likeur/gemmaday)
+Dépôt : [github.com/Likeur/intercom](https://github.com/Likeur/intercom)
 
 La position sert à choisir l’arrêt, pas seulement à dessiner la carte. Sans coordonnées, Gemma ne désigne pas un « arrêt le plus proche ».
 

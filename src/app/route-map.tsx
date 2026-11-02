@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { CircleMarker, MapContainer, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { CircleMarker, MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
 import type { TaxiStop } from "@/data/taxi-stops";
+import { taxiMarkerIcon } from "./taxi-marker";
 import "leaflet/dist/leaflet.css";
 
 export type MapPoint = { lat: number; lng: number };
@@ -89,17 +90,13 @@ function RouteCanvas({
           <Popup>Ta position</Popup>
         </CircleMarker>
       ) : null}
-      <CircleMarker
-        center={[stop.lat, stop.lng]}
-        radius={9}
-        pathOptions={{ color: "#9a3412", fillColor: "#ea580c", fillOpacity: 1 }}
-      >
+      <Marker position={[stop.lat, stop.lng]} icon={taxiMarkerIcon(false)}>
         <Popup>
           {stop.name}
           <br />
           {stop.address}
         </Popup>
-      </CircleMarker>
+      </Marker>
     </MapContainer>
   );
 }
@@ -116,11 +113,6 @@ export function StopPanel({
   const [line, setLine] = useState<RouteLine | null>(null);
   const [routeError, setRouteError] = useState<string | null>(null);
   const [routing, setRouting] = useState(false);
-  const panelRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    panelRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [line, routing, locationState]);
 
   useEffect(() => {
     if (!origin) return;
@@ -172,10 +164,7 @@ export function StopPanel({
   if (routeError) status = routeError;
 
   return (
-    <section
-      ref={panelRef}
-      className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800"
-    >
+    <section className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800">
       <div className="px-4 py-3">
         <p className="text-xs tracking-wide text-zinc-500 uppercase">Arrêt de taxi</p>
         <h2 className="text-lg font-semibold tracking-tight">{stop.name}</h2>

@@ -1,10 +1,10 @@
-# gemmaday
+# intercom
 
 Assistant pour se déplacer à Lubumbashi quand on ne connaît pas la ville. Le premier besoin traité : trouver l’arrêt de taxi qui permet d’aller quelque part.
 
 Projet du hackathon Hacktoberfest. L’IA du produit est [Gemma](https://ai.google.dev/gemma) (`gemma-4-31b-it`), appelée via l’API Gemini.
 
-**English.** gemmaday helps someone who has just arrived in Lubumbashi and does not know the city. They ask Gemma where to find the taxi stop that gets them to the place they need to reach.
+**English.** intercom helps someone who has just arrived in Lubumbashi and does not know the city. They ask Gemma where to find the taxi stop that gets them to the place they need to reach.
 
 ## Le problème
 
@@ -14,7 +14,7 @@ Demander au hasard dans la rue prend du temps, et les noms de lieux ne suffisent
 
 ## Ce que le projet fait
 
-gemmaday est une application web. La personne arrive sur le chat et dit où elle veut aller. Gemma choisit un arrêt de taxi parmi des repères de Lubumbashi, donne son adresse, puis la carte trace l’itinéraire depuis la position actuelle.
+intercom est une application web. La personne arrive sur le chat et dit où elle veut aller. Gemma choisit un arrêt de taxi parmi des repères de Lubumbashi, donne son adresse, puis la carte trace l’itinéraire depuis la position actuelle.
 
 Parcours :
 
